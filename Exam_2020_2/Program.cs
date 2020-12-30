@@ -92,7 +92,9 @@ namespace Exam_2020_2
 
             //var result = migratoryBirds(new List<int> { 1, 2, 3, 3, 3, 3, 4, 4, 4 });
 
-            var result = pangrams("We promptly judged antique ivory buckles for the next prize");
+            //var result = pangrams("We promptly judged antique ivory buckles for the next prize");
+
+            bonAppetit(new List<int> { 3, 10, 2, 9 }, 1, 12);
 
 
             #endregion
@@ -800,6 +802,26 @@ namespace Exam_2020_2
             return isPangram ? "pangram" : "not pangram";
         }
 
+        // basit if - else
+        public static void bonAppetit(List<int> bill, int k, int b)
+        {
+            bill.RemoveAt(k);
+            int totalValueofBill = 0;
 
+            foreach (var item in bill)
+            {
+                totalValueofBill += item;
+            }
+
+            if (b == (totalValueofBill / 2))
+            {
+                Console.WriteLine("Bon Appetit");
+            }
+            else
+            {
+                Console.WriteLine(b- (totalValueofBill / 2));
+            }
+
+        }
     }
 }
