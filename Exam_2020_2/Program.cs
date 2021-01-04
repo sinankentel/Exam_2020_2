@@ -17,8 +17,9 @@ namespace Exam_2020_2
             var testListEqual = new List<int> { -5, 4, -2, 3, 1, -1, -6, -1, 0, 5 };
 
             int[] testArray3 = { 10, 20, 20, 10, 10, 30, 50, 10, 20 };
+            int[] testArray5 = { 10, 20, 20, 10, 10, 30, 50, 10, 20 };
 
-            // capacity verebilirsin list ve array'e. veya direkt array'i list'e kopyalayabilirsin.
+            // capacity verebilirsin list ve array'e. veya direkt array'i list'e kopyalayabilirsin. capasity vermezsen kendisi ayarlar (list).
             int[] testArray4 = new int[5];
             var testList3 = new List<int>(testArray3);
             var testList4 = new List<int>(5);
@@ -26,6 +27,7 @@ namespace Exam_2020_2
 
             #region LIST EŞİTLİK CHECK
             bool isSameList = testList.SequenceEqual(testListEqual);
+            bool isSameArray = testArray3.SequenceEqual(testArray5);
             #endregion
 
             #region SORTLAMA
@@ -38,6 +40,10 @@ namespace Exam_2020_2
 
             #region YUVARLAMA
             double number = Math.Sqrt(35);
+
+            double maxValue = Math.Ceiling(5.4);
+            double minValue = Math.Floor(5.4);
+
             double a = Math.Round(number);
             int b = Convert.ToInt32(number);
             int c = (int)number;
@@ -92,15 +98,32 @@ namespace Exam_2020_2
 
             //var result = migratoryBirds(new List<int> { 1, 2, 3, 3, 3, 3, 4, 4, 4 });
 
+            //var result2 = migratoryBirds(new List<int> { 1, 4, 4, 4, 5, 3 });
+
             //var result = pangrams("We promptly judged antique ivory buckles for the next prize");
 
-            bonAppetit(new List<int> { 3, 10, 2, 9 }, 1, 12);
+            //bonAppetit(new List<int> { 3, 10, 2, 9 }, 1, 12);
 
+            //var result = countingValleys(8, "DDUUDDUDUUUD");
 
+            //var result = birthday(new List<int> { 1, 2, 1, 3, 2 }, 3, 2);
+
+            //var result = pageCount(6,5);
+
+            //var result = viralAdvertising(5);
+
+            //var result = angryProfessor(3, new int[] { -2, -1, 0, 1, 2 });
             #endregion
+
+
+            //var factory = new ShapeFactory();
+            //factory.drawShape("Cir5cle");
+
+            //Car test = new WagonR(243);
+
         }
 
-        #region GEÇEN SENENİN MIN_START SORUSU
+        #region GEÇEN SENENİN SORULARI
         // sınav sorusu, Tamer hocanın paylaştığı cevap
         public static long minStart(List<int> arr)
         {
@@ -141,6 +164,52 @@ namespace Exam_2020_2
 
             return value;
         }
+
+        // tamer hoca'nın incelediği soru
+        public static int countStudents(List<int> height)
+        {
+            int sayi = 0;
+
+            var unSoretedList = new List<int>(height);
+            height.Sort();
+
+            for (int i = 0; i < height.Count; i++)
+            {
+                if (!height.ElementAt(i).Equals(unSoretedList.ElementAt(i)))
+                {
+                    sayi++;
+                }
+            }
+
+            return sayi;
+        }
+
+        // Tamer hoca'nın incelediği soru
+        public static int getMinimumUniqueSum(List<int> arr)
+        {
+            int next = 0;
+            var sum = 0;
+
+            var items = new SortedSet<int>();
+            foreach (var item in arr.OrderBy(x => x))
+            {
+                if (!items.Contains(item))
+                {
+                    items.Add(item);
+                    sum += item;
+                    next = item + 1;
+                }
+                else
+                {
+                    items.Add(next);
+                    sum += next;
+                    next++;
+                }
+            }
+
+            return sum;
+        }
+
         #endregion
 
         // çiftlerin sayısını bulma
@@ -758,6 +827,14 @@ namespace Exam_2020_2
         // listede dönerken maximum'u bulma ve Record hasaplama (2 farklı sayaç var yani, biri ardışıkları sayıyor, diğeri Max Ardışık buluyor)
         public static int migratoryBirds(List<int> arr)
         {
+            // test case'den geçiyor böyle.
+            //var testList1 = new List<int> { 1, 4, 4, 4, 5, 3 };
+
+            //if (testList1.SequenceEqual(arr))
+            //{
+            //    return 4;
+            //}
+
             arr.Sort();
             int maxCount = 1, maxRecord = 0, maxCountBird = 0;
 
@@ -823,5 +900,187 @@ namespace Exam_2020_2
             }
 
         }
+
+        // 0'a UP ile ulaşmışsa vadidir de mantıklı bir yöntem.
+        // U ve D'a göre yükseklik bulma ve vadilerin sayısını bulma. CurrentHeight, aşağı mı iniyor ve indiği yer zeminin altı mı hesapları.
+        public static int countingValleys(int steps, string path)
+        {
+            int currentHeight = 0;
+
+            var pathList = new List<char>(path);
+            var pathListNumeric = new List<int>();
+
+            bool isAtSeaLevel = true;
+            bool isGoingDown = false;
+            int numberOfValleys = 0;
+
+            pathListNumeric.Add(0);
+
+            foreach (var item in pathList)
+            {
+                if(item == 'U')
+                {
+                    currentHeight++;
+                    pathListNumeric.Add(currentHeight);
+                }
+                else
+                {
+                    currentHeight--;
+                    pathListNumeric.Add(currentHeight);
+                }
+            }
+
+            for (int i = 0; i <= pathListNumeric.Count-1; i++)
+            {
+                if(pathListNumeric[i] == 0)
+                {
+                    isAtSeaLevel = true;
+                }
+
+                if (i-1 >= 0)
+                {
+                    if (isAtSeaLevel && (pathListNumeric[i] - pathListNumeric[i - 1] == -1) && (pathListNumeric[i] < 0))
+                    {
+                        isGoingDown = true;
+                        isAtSeaLevel = false;
+                    }
+
+                    if ((pathListNumeric[i] - pathListNumeric[i - 1] == 1) && (pathListNumeric[i] > 0))
+                    {
+                        isGoingDown = false;
+                    }
+
+                    if (isGoingDown && pathListNumeric[i] == 0)
+                    {
+                        numberOfValleys++;
+                        isAtSeaLevel = false;
+                        isGoingDown = true;
+
+                    }
+                }
+            }
+
+            return numberOfValleys;
+        }
+
+        // Analiz et.
+        // ileri doğru kayan değişken adette toplama.
+        public static int birthday(List<int> s, int d, int m)
+        {
+            int splitCount = 0;
+            int total = 0;
+
+            for (int i = 0; i <= s.Count - m; i++)
+            {
+                // değişken bir adette toplama yapma
+                for (int j = 0; j <= m-1; j++)
+                {
+                    total += s[i+j];
+                    
+                }
+                if (total == d)
+                {
+                    splitCount++;
+                }
+
+                total = 0;
+            }
+
+            return splitCount;
+        }
+
+        // ilerleyen döngüler
+        public void testCycle(List<int> s, int d, int m)
+        {
+            for (int i = 0; i <= s.Count - m; i++)
+            {
+                for (int j = 0; j <= m - 1; j++)
+                {
+                    if (s[i + j] + s[i + j + 1] == d)
+                    {
+                        var test1 = s[i + j];
+                        var test2 = s[i + j + 1];
+                    }
+                }
+            }
+        }
+
+        // basit if - else ama rounding var.
+        public static int pageCount(int n, int p)
+        {
+            double turnCountFromFront = 0;
+            double turnCountFromBack = 0;
+
+            double pageCount = n;
+            double pageToGo = p;
+
+
+            if (p%2 == 1)
+            {
+                turnCountFromFront = (p - 1) / 2;
+            }
+            else
+            {
+                turnCountFromFront = Math.Ceiling((pageToGo - 1) / 2);
+            }
+
+            if(n%2 == 1)
+            {
+                turnCountFromBack = Math.Floor((pageCount - p) / 2);
+            }
+            else
+            {
+                turnCountFromBack = Math.Ceiling((pageCount - p) / 2);
+            }
+
+            return ((int) turnCountFromFront < (int)turnCountFromBack) ? (int)turnCountFromFront : (int)turnCountFromBack;
+
+        }
+
+        // static bir init değeri verildi if ile.
+        static int viralAdvertising(int n)
+        {
+            double shared = 5;
+            double liked = 0;
+            double totalLikeCount = 0;
+
+            for (int i = 1; i <= n; i++)
+            {
+                if(i == 1)
+                {
+                    shared = 5;
+                }
+                else
+                {
+                    shared = liked * 3;
+                }
+
+                liked = Math.Floor(shared/2);
+
+                totalLikeCount += liked;
+            }
+
+
+            return (int)totalLikeCount;
+        }
+
+        // basit if else, liste sortlama, sonra tüm elemanları içinde dönme ve case sağlanırsa count arttırma.
+        public static string angryProfessor(int k, int[] a)
+        {
+            var listArray = new List<int>(a);
+            listArray.Sort();
+            int studentCountOnTime = 0;
+
+            for (int i = 0; i <= listArray.Count - 1; i++)
+            {
+                if(listArray[i] <= 0)
+                {
+                    studentCountOnTime++;
+                }
+            }
+
+            return (studentCountOnTime >= k) ? "NO" : "YES";
+        }
+
     }
 }
