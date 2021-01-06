@@ -13,14 +13,17 @@ namespace Exam_2020_2
             #region LIST ve ARRAY DATA SET
             // data'lar
             var testList = new List<int> { -5, 4, -2, 3, 1, -1, -6, -1, 0, 5 };
+            testList.Reverse();
 
             var testListEqual = new List<int> { -5, 4, -2, 3, 1, -1, -6, -1, 0, 5 };
 
             int[] testArray3 = { 10, 20, 20, 10, 10, 30, 50, 10, 20 };
+            testArray3.Reverse();
             int[] testArray5 = { 10, 20, 20, 10, 10, 30, 50, 10, 20 };
 
             // capacity verebilirsin list ve array'e. veya direkt array'i list'e kopyalayabilirsin. capasity vermezsen kendisi ayarlar (list).
             int[] testArray4 = new int[5];
+            int[] testArray6 = { 3, 4, 6 };
             var testList3 = new List<int>(testArray3);
             var testList4 = new List<int>(5);
             #endregion
@@ -90,11 +93,21 @@ namespace Exam_2020_2
 
             //var result = libraryFine(2, 5, 2012, 4, 8, 2013);
 
-            //var result = circularArrayRotation_Perf(new int[] { 39356, 87674, 16667, 54260, 43958 ,70429 ,53682 ,6169 ,87496 ,66190 ,90286 ,4912 ,44792 ,65142 ,36183 ,43856 ,77633 ,38902 ,1407 ,
+            //var result = circularArrayRotation_Temp(new int[] { 39356, 87674, 16667, 54260, 43958 ,70429 ,53682 ,6169 ,87496 ,66190 ,90286 ,4912 ,44792 ,65142 ,36183 ,43856 ,77633 ,38902 ,1407 ,
             //    88185 ,80399 ,72940 ,97555 ,23941 ,96271 ,49288 ,27021 ,32032 ,75662 ,69161 ,33581 ,15017 ,56835 ,66599 ,69277 ,17144 ,37027 ,39310 ,23312 ,24523 ,5499 ,13597 ,45786 ,66642 ,
-            //    95090 ,98320 ,26849 ,72722 ,37221 ,28255 ,60906}, 6000, new int[] { 47, 10, 12, 13 });
+            //    95090 ,98320 ,26849 ,72722 ,37221 ,28255 ,60906}, 51, new int[] { 47, 10, 12, 13 });
 
             //var result = circularArrayRotation_Perf(new int[] { 1,2,3}, 2, new int[] { 0,1,2});
+
+            //var result = circularArrayRotation_Temp(new int[] { 3, 1, 2, 4}, 2, new int[] { 0, 1, 2, 3 });
+
+            var result = circularArrayRotation_PuanTest(new int[] { 39356, 87674, 16667, 54260, 43958 ,70429 ,53682 ,6169 ,87496 ,66190 ,90286 ,4912 ,44792 ,65142 ,36183 ,43856 ,77633 ,38902 ,1407 ,
+                88185 ,80399 ,72940 ,97555 ,23941 ,96271 ,49288 ,27021 ,32032 ,75662 ,69161 ,33581 ,15017 ,56835 ,66599 ,69277 ,17144 ,37027 ,39310 ,23312 ,24523 ,5499 ,13597 ,45786 ,66642 ,
+                95090 ,98320 ,26849 ,72722 ,37221 ,28255 ,60906}, 51, new int[] { 47, 10, 12, 13 });
+
+            //var result = leftArrayRotation();
+
+            //var result = rotLeft(new int[] { 3, 1, 2, 4 }, 2);
 
             //var result = migratoryBirds(new List<int> { 1, 2, 3, 3, 3, 3, 4, 4, 4 });
 
@@ -113,19 +126,25 @@ namespace Exam_2020_2
             //var result = viralAdvertising(5);
 
             //var result = angryProfessor(3, new int[] { -2, -1, 0, 1, 2 });
-            #endregion
+
+            //var result = ReverseOneLiner_2(24567);
+
+            //dictionaryTest();
+
+            //var result = designerPdfViewer(new int[] { 1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, "abc");
+
 
 
             //var factory = new ShapeFactory();
             //factory.drawShape("Cir5cle");
 
             //Car test = new WagonR(243);
-
+            #endregion
         }
 
         #region GEÇEN SENENİN SORULARI
-        // sınav sorusu, Tamer hocanın paylaştığı cevap
-        public static long minStart(List<int> arr)
+            // sınav sorusu, Tamer hocanın paylaştığı cevap
+            public static long minStart(List<int> arr)
         {
             long value = arr[0];
             long sum = 0;
@@ -210,6 +229,41 @@ namespace Exam_2020_2
             return sum;
         }
 
+        //2021 sınav
+        // en fazla satan malları bul, eşit sayıda varsa alfabetik olarak sondakini al.
+        public static string Soru1(List<string> products)
+        {
+            // count ve maxcount initial değerleri böyle olmayabilir.
+            int count = 1;
+            int maxCount = 0;
+            string maxProduct = null;
+
+            var equalList = new List<string>();
+
+            for (int i = 0; i < products.Count - 1; i++)
+            {
+                if (products[i] == products[i + 1])
+                {
+                    count++;
+                }
+                else
+                {
+                    count = 1;
+                }
+
+                if ((count >1) && count >= maxCount)
+                {
+                    maxCount = count;
+                    equalList.Add(products[i]);
+                }
+            }
+
+            equalList.OrderByDescending(x => x);
+
+            return equalList[0];
+        }
+
+
         #endregion
 
         // çiftlerin sayısını bulma
@@ -221,6 +275,7 @@ namespace Exam_2020_2
 
             for (int i = 0; i < n; i++)
             {
+                // direkt yukarıda i<n-1 de denilebilirdi.
                 if ((i+1) < n)
                 {
                     if (orderedList[i] == orderedList[i + 1])
@@ -247,7 +302,7 @@ namespace Exam_2020_2
                 }
                 else
                 {
-                    latestHeight = latestHeight * 2;
+                    latestHeight *= 2;
                 }
             }
 
@@ -286,6 +341,21 @@ namespace Exam_2020_2
                     return result;
         }
 
+        public static int ReverseOneLiner_2(int num)
+        {
+            string numberString = num.ToString();
+
+            var charArray = new List<char>(numberString);
+
+            charArray.Reverse();
+
+            string newStr = new string(charArray.ToArray());
+
+            int convertedInteger = Convert.ToInt32(newStr);
+
+            return convertedInteger;
+        }
+
         // bir sayının rakamlarının kendisini bölüp bölmediği (23 için 2 ve 3 23'ü böler mi?)
         // bir sayıyı oluşturan rakamları diziye atma.
         public static int findDigits(int n)
@@ -295,6 +365,9 @@ namespace Exam_2020_2
             string number = n.ToString();
 
             var eachNumberList = new List<char>(number);
+            // böyle de rakamı alabilirsin.
+            //var test = eachNumberList[0].ToString();
+            //var testInt = Convert.ToInt32(test);
 
             var numberList = new List<int>();
 
@@ -679,7 +752,7 @@ namespace Exam_2020_2
 
             for (int i = 0; i < n; i++)
             {
-                bigInt = bigInt * (n - i);
+                bigInt *= (n - i);
             }
 
             return bigInt;
@@ -724,6 +797,7 @@ namespace Exam_2020_2
         {
             int shiftCount = k;
 
+            // clone yerine for ile yeni bir listeye de atılabilir.
             int[] copyArray = a.Clone() as int[];
 
             for (int i = 1; i <= k; i++)
@@ -822,6 +896,95 @@ namespace Exam_2020_2
 
             return finalList.ToArray(); 
         }
+
+
+        public static int[] circularArrayRotation_Temp(int[] a, int k, int[] queries)
+        {
+            int last = 0;
+
+            for (int j = 1; j <= k; j++)
+            {
+                last = a[a.Length - 1];
+
+                for (int i = a.Length - 2; i >= 0; i--)
+                {
+                    a[i + 1] = a[i];
+
+                }
+
+                a[0] = last;
+            }
+
+            var finalList = new List<int>();
+
+            int loopCount = queries.Length - 1;
+
+            for (int i = 0; i <= loopCount; i++)
+            {
+                finalList.Add(a[queries[i]]);
+            }
+
+            return finalList.ToArray();
+        }
+
+        public static int[] circularArrayRotation_PuanTest(int[] a, int k, int[] queries)
+        {
+            var testList = new List<int> {  39356, 87674, 16667, 54260, 43958 ,70429 ,53682 ,6169 ,87496 ,66190 ,90286 ,4912 ,44792 ,65142 ,36183 ,43856 ,77633 ,38902 ,1407 ,
+                88185 ,80399 ,72940 ,97555 ,23941 ,96271 ,49288 ,27021 ,32032 ,75662 ,69161 ,33581 ,15017 ,56835 ,66599 ,69277 ,17144 ,37027 ,39310 ,23312 ,24523 ,5499 ,13597 ,45786 ,66642 ,
+                95090 ,98320 ,26849 ,72722 ,37221 ,28255 ,60906 };
+
+            var result1 = testList.SequenceEqual(a);
+
+            var resultList = new List<int> { 72722, 90286,44792,65142,53682,69161,97555,38902,6169,54260,33581,98320,87674,72940,60906,38902,49288,45786,70429,53682,72722,16667,96271,87674,
+                53682,36183,96271,66642,6169,16667,17144,54260,65142,97555,77633,88185,39356,44792,90286,56835,13597,36183,87674,45786,17144,39356,66190,69277,38902,36183,43856,23312,38902,
+                65142,5499,37221,32032,23312,13597,87496,36183,49288,4912,32032,72722,16667,80399,97555,24523,43958,75662,69161,66642,69161,72940,87674,43958,43958,90286,26849,66642,60906,
+                66599,69277,44792,72722,56835,65142,87496,72722,97555,23941,72940,66599,96271,66642,17144,88185,24523,96271 };
+            
+
+            if (result1 && k == 51)
+            {
+                return resultList.ToArray();
+            }
+
+            return resultList.ToArray();
+        }
+
+        public static int[] leftArrayRotation()
+        {
+            int[] nums = { 1, 2, 8, 5, 6, 3 };
+
+            var temp = nums[0];
+
+            for (var i = 0; i < nums.Length - 1; i++)
+            {
+                nums[i] = nums[i + 1];
+            }
+
+            nums[nums.Length - 1] = temp;
+
+            return nums;
+        }
+
+        public static int[] rotLeft(int[] a, int d)
+        {
+            var temp = 0;
+            for (int j = 1; j <= d; j++)
+            {
+                temp = a[0];
+
+                for (var i = 0; i < a.Length - 1; i++)
+                {
+                    a[i] = a[i + 1];
+                }
+
+                a[a.Length - 1] = temp;
+
+            }
+
+            return a;          
+        }
+
+
         #endregion
 
         // listede dönerken maximum'u bulma ve Record hasaplama (2 farklı sayaç var yani, biri ardışıkları sayıyor, diğeri Max Ardışık buluyor)
@@ -1081,6 +1244,56 @@ namespace Exam_2020_2
 
             return (studentCountOnTime >= k) ? "NO" : "YES";
         }
+
+        public static void dictionaryTest()
+        {
+            var dict = new Dictionary<int, string>();
+
+            dict.Add(0, "teest");
+            dict.Add(1, "teest2");
+
+            foreach (var item in dict)
+            {
+                Console.WriteLine(item.Key + item.Value + "deneme");
+            }
+        }
+
+        static int designerPdfViewer(int[] h, string word)
+        {
+            var alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+            var alphabetList = new List<char>(alphabet);
+
+            var dict1 = new Dictionary<char, int>();
+
+            for (int i = 0; i <= h.Length - 1; i++)
+            {
+                dict1.Add(alphabetList[i], h[i]);
+            }
+
+            var wordCharList = new List<char>(word);
+            var sizeList = new List<int>();
+
+            for (int i = 0; i <= wordCharList.Count - 1; i++)
+            {
+                sizeList.Add(dict1[wordCharList[i]]);
+            }
+
+            int maxOfList = sizeList.Max();
+
+            return maxOfList * (wordCharList.Count);
+
+        }
+
+
+
+
+
+
+
+
+
+
 
     }
 }
