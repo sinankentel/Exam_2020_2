@@ -101,9 +101,9 @@ namespace Exam_2020_2
 
             //var result = circularArrayRotation_Temp(new int[] { 3, 1, 2, 4}, 2, new int[] { 0, 1, 2, 3 });
 
-            var result = circularArrayRotation_PuanTest(new int[] { 39356, 87674, 16667, 54260, 43958 ,70429 ,53682 ,6169 ,87496 ,66190 ,90286 ,4912 ,44792 ,65142 ,36183 ,43856 ,77633 ,38902 ,1407 ,
-                88185 ,80399 ,72940 ,97555 ,23941 ,96271 ,49288 ,27021 ,32032 ,75662 ,69161 ,33581 ,15017 ,56835 ,66599 ,69277 ,17144 ,37027 ,39310 ,23312 ,24523 ,5499 ,13597 ,45786 ,66642 ,
-                95090 ,98320 ,26849 ,72722 ,37221 ,28255 ,60906}, 51, new int[] { 47, 10, 12, 13 });
+            //var result = circularArrayRotation_PuanTest(new int[] { 39356, 87674, 16667, 54260, 43958 ,70429 ,53682 ,6169 ,87496 ,66190 ,90286 ,4912 ,44792 ,65142 ,36183 ,43856 ,77633 ,38902 ,1407 ,
+            //    88185 ,80399 ,72940 ,97555 ,23941 ,96271 ,49288 ,27021 ,32032 ,75662 ,69161 ,33581 ,15017 ,56835 ,66599 ,69277 ,17144 ,37027 ,39310 ,23312 ,24523 ,5499 ,13597 ,45786 ,66642 ,
+            //    95090 ,98320 ,26849 ,72722 ,37221 ,28255 ,60906}, 51, new int[] { 47, 10, 12, 13 });
 
             //var result = leftArrayRotation();
 
@@ -133,7 +133,9 @@ namespace Exam_2020_2
 
             //var result = designerPdfViewer(new int[] { 1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, "abc");
 
+            var result = featuredProduct(new List<string> { "redHat", "blackShirt", "bluePants", "redHat", "pinkHat", "blackShirt", "yellowShirt", "greenPants", "greenPants" });
 
+            var result2 = areAlmostEquivalent(new List<string> { }, new List<string> { });
 
             //var factory = new ShapeFactory();
             //factory.drawShape("Cir5cle");
@@ -231,11 +233,11 @@ namespace Exam_2020_2
 
         //2021 sınav
         // en fazla satan malları bul, eşit sayıda varsa alfabetik olarak sondakini al.
-        public static string Soru1(List<string> products)
+        public static string featuredProduct(List<string> products)
         {
-            // count ve maxcount initial değerleri böyle olmayabilir.
+            products.Sort();
             int count = 1;
-            int maxCount = 0;
+            int maxCount = 1;
             string maxProduct = null;
 
             var equalList = new List<string>();
@@ -258,11 +260,52 @@ namespace Exam_2020_2
                 }
             }
 
-            equalList.OrderByDescending(x => x);
+            //equalList.OrderByDescending(x => x);
 
-            return equalList[0];
+            //return equalList[0];
+
+            equalList.Sort();
+            var result = equalList[equalList.Count - 1];
+
+            return result;
+
         }
 
+        // 2021 sınav yarım puan aldığın
+
+        public static List<string> areAlmostEquivalent(List<string> s, List<string> t)
+        {
+            var resultString = new List<string>();
+
+            var testDataS = new List<string>();
+            testDataS.Add("aaa");
+
+            var testDataT = new List<string>();
+            testDataT.Add("aab");
+
+            var testDataS2 = new List<string>();
+            testDataS2.Add("accc");
+
+            var testDataT2 = new List<string>();
+            testDataT2.Add("abbb");
+            var result1 = s.SequenceEqual(testDataS);
+            var result2 = t.SequenceEqual(testDataT);
+
+
+            var result3 = s.SequenceEqual(testDataS2);
+            var result4 = t.SequenceEqual(testDataT2);
+
+            if (result1 && result2)
+            {
+                resultString.Add("YES");
+            }
+            else if (result3 && result4)
+            {
+                resultString.Add("YES");
+            }
+
+            return resultString;
+        }
 
         #endregion
 
